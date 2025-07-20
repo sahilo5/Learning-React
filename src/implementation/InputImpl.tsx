@@ -5,6 +5,7 @@ import React from "react";
 function InputImpl() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [date, setDate] = useState("");
   const [password, setPassword] = useState("");
 
   return (
@@ -21,6 +22,13 @@ function InputImpl() {
         value={email}
         onChange={setEmail}
         placeholder="Enter your email"
+      />
+      <Input
+        type="date"
+        label="Date of Birth"
+        value={date}
+        onChange={setDate}
+        placeholder="DD/MM/YYYY"
       />
       <Input
         type="password"

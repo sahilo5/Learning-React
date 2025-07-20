@@ -1,26 +1,22 @@
 import React from "react";
-import Tabs from "../components/Tabs";
+import { Tabs, Tab } from "../components/Tabs";
 
-function TabsPage() {
-  const tabList = [
-    { label: "Employees" },
-    { label: "Departments" },
-    { label: "Leave Requests" },
-  ];
-
+const EmployeesTabsDemo = () => {
   return (
     <div className="p-4">
-      <Tabs tabs={tabList} defaultIndex={0}>
-        {(activeIndex) => (
-          <>
-            {activeIndex === 0 && <div>Employee List Goes Here</div>}
-            {activeIndex === 1 && <div>Department View</div>}
-            {activeIndex === 2 && <div>Leave Management</div>}
-          </>
-        )}
+      <Tabs defaultIndex={0}>
+        <Tab index={0} label="Employees">
+          <div>Employee Component Goes Here</div>
+        </Tab>
+        <Tab index={1} label="Departments">
+          <div>Departments View</div>
+        </Tab>
+        <Tab index={2} label="Leaves">
+          <div>Leave Request List</div>
+        </Tab>
       </Tabs>
     </div>
   );
 };
 
-export default TabsPage;
+export default EmployeesTabsDemo;

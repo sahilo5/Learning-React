@@ -1,45 +1,76 @@
-import React, { useState, ReactNode } from "react";
+import React, { 
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  ReactElement,
+  Children,
+  isValidElement,
+  cloneElement 
+} from "react";
 
-type Tab = {
+// TabProps
+type TabProps = {
+  index: number;
   label: string;
-  icon?: ReactNode;
+  children: ReactNode;
 };
 
 type TabsProps = {
-  tabs: Tab[];
   defaultIndex?: number;
-  children: (activeIndex: number) => ReactNode;
+  children: ReactNode;
 };
 
-const Tabs: React.FC<TabsProps> = ({ tabs, defaultIndex = 0, children }) => {
+const TabsContext = createContext<{
+  activeIndex: number;
+  setActiveIndex: (index: number) => void;
+} | null>(null);
+
+// Tabs
+export const Tabs: React.FC<TabsProps> = ({ defaultIndex = 0, children }) => {
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
 
-  return (
-    <div className="w-full">
-      {/* Tab Buttons */}
-      <div className="flex space-x-4 border-b border-light mb-4">
-        {tabs.map((tab, index) => (
-          <button
-            key={index}
-            className={`px-4 py-2 text-sm font-medium rounded-t ${
-              activeIndex === index
-                ? "text-primary border-b-2 border-primary"
-                : "text-gray-500 hover:text-primary"
-            }`}
-            onClick={() => setActiveIndex(index)}
-          >
-            <div className="flex items-center space-x-1">
-              {tab.icon && <span>{tab.icon}</span>}
-              <span>{tab.label}</span>
-            </div>
-          </button>
-        ))}
-      </div>
+  const validChildren = Children.toArray(children).filter(isValidElement) as ReactElement<TabProps>[];
 
-      {/* Active Tab Content */}
-      <div>{children(activeIndex)}</div>
-    </div>
+  const labels = validChildren.map((child) => ({
+    index: child.props.index,
+    label: child.props.label,
+  }));
+
+  return (
+    <TabsContext.Provider value={{ activeIndex, setActiveIndex }}>
+      <div className="w-full">
+        {/* Tab Buttons */}
+        <div className="flex space-x-4 border-b border-light mb-4">
+          {labels.map(({ index, label }) => (
+            <button
+              key={index}
+              onClick={() => setActiveIndex(index)}
+              className={`px-4 py-2 text-sm font-medium ${
+                activeIndex === index
+                  ? "text-primary border-b-2 border-primary"
+                  : "text-gray-500 hover:text-primary"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {/* Tab Content */}
+        <div>
+          {validChildren.map((child) =>
+            child.props.index === activeIndex ? cloneElement(child) : null
+          )}
+        </div>
+      </div>
+    </TabsContext.Provider>
   );
 };
 
-export default Tabs;
+// Tab Component
+export const Tab: React.FC<TabProps> = ({ children }) => {
+  const context = useContext(TabsContext);
+  if (!context) throw new Error("<Tab> must be used inside <Tabs>");
+  return <>{children}</>;
+};

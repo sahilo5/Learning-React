@@ -24,7 +24,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 }) => {
   return (
     <div className={`relative flex flex-col space-y-1 ${className}`}>
-  {label && <label className="text-sm text-dark">{label}</label>}
+  {label && <label className="text-sm text-dark font-medium">{label}</label>}
   
   <div className="relative">
     <select

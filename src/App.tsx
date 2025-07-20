@@ -8,6 +8,9 @@ import Settings from "./pages/Settings";
 import TestPage from "./pages/TestPage"; // <-- your component testing
 import LoadingPage from "./implementation/LoadingPage";
 import TabsPage from "./implementation/TabsPage";
+import BrowsePage from "./implementation/BrowseImpl";
+import LoginForm from "./pages/login/LoginFrom";
+import RegisterForm from "./pages/register/RegisterForm";
 
 function App() {
   return (
@@ -21,6 +24,9 @@ function App() {
           <Route path="test" element={<TestPage />} /> {/* testing UI */}
           <Route path="loading" element={<LoadingPage />} /> {/* testing UI */}
           <Route path="tabsPage" element={<TabsPage />} /> {/* testing UI */}
+          <Route path="browsePage" element={<BrowsePage />} /> {/* testing UI */}
+          <Route path="loginPage" element={<LoginForm />} /> {/* testing UI */}
+          <Route path="registerPage" element={<RegisterForm />} /> {/* testing UI */}
         </Route>
       </Routes>
     </Router>
