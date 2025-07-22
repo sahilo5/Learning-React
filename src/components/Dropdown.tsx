@@ -1,4 +1,5 @@
 import React from "react";
+import Label from "./Label";
 
 type Option = {
   label: string;
@@ -24,7 +25,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 }) => {
   return (
     <div className={`relative flex flex-col space-y-1 ${className}`}>
-  {label && <label className="text-sm text-dark font-medium">{label}</label>}
+  {label && <Label text={label} status="Required" />}
   
   <div className="relative">
     <select

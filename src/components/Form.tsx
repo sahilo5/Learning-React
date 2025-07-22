@@ -1,4 +1,3 @@
-// components/Form.tsx
 import React from "react";
 import Input from "./Input";
 import Checkbox from "./Checkbox";

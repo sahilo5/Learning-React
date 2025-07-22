@@ -3,22 +3,21 @@ import React, { useState } from "react";
 import Form from "../../components/Form";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
+import { useLoginForm } from "./LoginFrom.hooks";
+import { stringify } from "postcss";
 
 const LoginForm = () => {
-    const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
 
-    const handleLogin = () => {
-        console.log("Logging in with:", { email, password });
-        // Add validation or API call
-    };
+    const {
+        username,
+        setEmail,
+        password,
+        setPassword,
+        handleLogin,
+        handleRegister,
+      } = useLoginForm();
 
-    const handleRegister = () => {
-        navigate("/registerPage");
-    };
-
-    return (
+    return (    
         <div className="max-w-sm mx-auto mt-10 bg-white shadow p-6 rounded border border-light">
             <h2 className="text-xl font-semibold mb-4 text-dark">Login</h2>
             <Form
@@ -26,10 +25,10 @@ const LoginForm = () => {
                 submitLabel="Login"
                 fields={[
                     {
-                        type: "email",
-                        name: "email",
-                        label: "Email",
-                        value: email,
+                        type: "text",
+                        name: "text",
+                        label: "Username",
+                        value: username,
                         onChange: setEmail,
                         placeholder: "Enter your email",
                     },

@@ -22,6 +22,9 @@ const TestPage = () => {
 
   return (
     <div className="p-6 space-y-6 text-dark bg-light min-h-screen">
+      <div>
+        <h1>{localStorage.getItem("username")}</h1>
+      </div>
       <div className="space-x-3">
         <Button onClick={() => alert("Primary clicked")}>Add Employee</Button>
         <Button variant="secondary">Cancel</Button>

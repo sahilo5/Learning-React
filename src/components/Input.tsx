@@ -20,6 +20,20 @@ const Input: React.FC<InputProps> = ({
   disabled = false,
   className = "",
 }) => {
+  // Suggest autocomplete values based on type
+  const getAutoComplete = () => {
+    switch (type) {
+      case "email":
+        return "email";
+      case "password":
+        return "current-password"; // or "new-password" in registration
+      case "text":
+        return "on"; 
+      default:
+        return undefined;
+    }
+  };
+
   return (
     <div className={`flex flex-col space-y-1 ${className}`}>
       {label && <Label text={label} status="Required" />}
@@ -29,6 +43,7 @@ const Input: React.FC<InputProps> = ({
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
+        autoComplete={getAutoComplete()}
         className={`
           px-3 py-2 text-sm rounded-md border border-secondary bg-white text-dark 
           focus:outline-none focus:ring-2 focus:ring-primary
