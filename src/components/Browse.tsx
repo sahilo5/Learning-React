@@ -9,9 +9,20 @@ type BrowseProps<T> = {
   columns: Column<T>[];
   data: T[];
   footerContent?: React.ReactNode;
+  title?: string;
+  subtitle?: string;
+  headerActions?: React.ReactNode; 
 };
 
-function Browse<T extends Record<string, any>>({ columns, data, footerContent }: BrowseProps<T>) {
+
+function Browse<T extends Record<string, any>>({
+  columns,
+  data,
+  footerContent,
+  title,
+  subtitle,
+  headerActions,
+}: BrowseProps<T>) {
   const [search, setSearch] = useState("");
 
   const filteredData = useMemo(() => {
@@ -26,23 +37,36 @@ function Browse<T extends Record<string, any>>({ columns, data, footerContent }:
   return (
     <div className="bg-white shadow-md">
       {/* Header */}
-      <div className="p-4 bg-accent border-b border-light flex justify-end">
-        <div className="relative w-2xs">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-light">
-            {/* Inline SVG search icon */}
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
-            </svg>
-            </span>
-            <input
-            type="text"
-            placeholder="Search..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-light rounded focus:outline-none focus:ring-2 focus:ring-light text-sm placeholder-light font-semibold text-light"
-            />
+      <div className="p-4 bg-accent border-b border-light">
+        <div className="flex justify-between items-center flex-wrap gap-4">
+          <div>
+            {title && <h2 className="text-xl font-bold text-light">{title}</h2>}
+            {subtitle && <p className="text-sm text-light">{subtitle}</p>}
+          </div>
+
+          <div className="flex items-center gap-2">
+            
+
+            <div className="relative w-2xs">
+              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-light">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+                </svg>
+              </span>
+              <input
+                type="text"
+                placeholder="Search..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border border-light rounded focus:outline-none focus:ring-2 focus:ring-light text-sm placeholder-light font-semibold text-light"
+              />
+            </div>
+
+            {headerActions && <div>{headerActions}</div>}
+
+          </div>
         </div>
-        </div>
+      </div>
 
 
       {/* Table */}

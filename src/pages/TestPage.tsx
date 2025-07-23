@@ -9,10 +9,19 @@ import LabelImpl from "../implementation/LabelImpl";
 import CardImpl from "../implementation/CardImpl";
 import BadgeImpl from "../implementation/BadgeImpl";
 import Loader from "../components/Loader";
+import MiniWindow from "../components/MiniWindow";
+import { useToast } from "../components/ToastProvider";
+import ToggleImpl from "../implementation/ToggleImpl";
 
 const TestPage = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [role, setRole] = useState("admin");
+
+  // Miniwindow
+  const [open, setOpen] = useState(false);
+
+  // Toasts
+  const { showToast } = useToast();
 
   const roleOptions = [
     { label: "Admin", value: "admin" },
@@ -83,6 +92,12 @@ const TestPage = () => {
         <BadgeImpl />
       </div>
 
+      <div>
+        <h1 className="text-indigo-500 font-bold text-2xl">Toggle</h1>
+        <ToggleImpl />
+      </div>
+
+      <h1 className="text-indigo-500 font-bold text-2xl">Loader</h1>
       <button
   disabled
   className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded"
@@ -90,6 +105,29 @@ const TestPage = () => {
   <Loader size={16} color="text-white" />
   Saving...
 </button>
+
+<div>
+        <h1 className="text-indigo-500 font-bold text-2xl">Minipage</h1>
+        <Button onClick={() => setOpen(true)}>Open Mini Window</Button>
+
+      <MiniWindow isOpen={open} onClose={() => setOpen(false)}>
+        <h2 className="text-xl font-bold mb-4">Mini Window Title</h2>
+        <CardImpl/>
+        <CardImpl/>
+        <CardImpl/>
+        <CardImpl/>
+        <CardImpl/>
+        <CardImpl/>
+      </MiniWindow>
+      </div>
+
+      <div className="space-x-3">
+      <h1 className="text-indigo-500 font-bold text-2xl">Toasts</h1>
+
+      <Button onClick={() => showToast("Saved successfully!", "success")}>Show Success</Button>
+      <Button onClick={() => showToast("Something went wrong", "error")}>Show Error</Button>
+      <Button onClick={() => showToast("This is an information toast, you can give any info here.", "info")}>Show Info</Button>
+    </div>
 
     </div>
   );
